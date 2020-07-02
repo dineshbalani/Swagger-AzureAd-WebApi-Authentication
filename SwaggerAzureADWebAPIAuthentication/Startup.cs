@@ -31,13 +31,14 @@ namespace SwaggerAzureADWebAPIAuthentication
         {
             services.AddControllers();
 
-            // Add JWT Bearer Authentication
+            // Enable JWT Bearer Authentication
             services.AddAuthentication(sharedOptions =>
             {
                 sharedOptions.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
             }).AddJwtBearer(options => 
-            { Configuration.Bind("AzureAd", options);
-                // options.Audience = _azureOptions.ClientId;
+            { 
+                Configuration.Bind("AzureAd", options);
+                // Authority will be Your AzureAd Instance and Tenant Id
                 options.Authority = $"{Configuration["AzureAd:Instance"]}{Configuration["AzureAd:TenantId"]}/v2.0";
 
                 // The valid audiences are both the Client ID(options.Audience) and api://{ClientID}
@@ -66,6 +67,7 @@ namespace SwaggerAzureADWebAPIAuthentication
                 endpoints.MapControllers();
             });
 
+            // Add Swagger UI
             app.UseOpenApi();
             app.UseSwaggerUi3(settings =>
             {
@@ -81,6 +83,10 @@ namespace SwaggerAzureADWebAPIAuthentication
             });
         }
 
+        /// <summary>
+        /// Function to Generate Swagger UI Document and authenticate Swagger UI against the Azure Ad Application
+        /// </summary>
+        /// <param name="services"></param>
         private void AddSwagger (IServiceCollection services)
         {
             services.AddOpenApiDocument(document =>

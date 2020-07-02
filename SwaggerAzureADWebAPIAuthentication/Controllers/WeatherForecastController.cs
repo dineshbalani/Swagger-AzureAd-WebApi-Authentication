@@ -28,7 +28,6 @@ namespace SwaggerAzureADWebAPIAuthentication.Controllers
         [Authorize]
         public IEnumerable<WeatherForecast> Get ()
         {
-            var user = User.Identity.Name;
             var rng = new Random();
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
