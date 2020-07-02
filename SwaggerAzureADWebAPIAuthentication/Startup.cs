@@ -57,9 +57,8 @@ namespace SwaggerAzureADWebAPIAuthentication
             }
 
             app.UseHttpsRedirection();
-            app.UseAuthentication();
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -78,7 +77,7 @@ namespace SwaggerAzureADWebAPIAuthentication
                     // Doing that you will have to create a client secret to access that application and get into space of secret management
                     // This makes it easier to access the application and grab a token on behalf of user
                     ClientId = Configuration["AzureAd:ClientId"],
-                    AppName = "SubHub-Swagger-UI-Client",
+                    AppName = "Swagger-UI-Client",
                 };
             });
         }
